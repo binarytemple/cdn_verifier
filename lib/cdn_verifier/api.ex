@@ -1,4 +1,4 @@
-defmodule PocMonday.API do
+defmodule CdnVerifier.API do
   def child_spec([server_options]) do
     {:ok, port} = Keyword.fetch(server_options, :port)
 
@@ -17,16 +17,14 @@ defmodule PocMonday.API do
     start_link(init(), server_options)
   end
 
-  def start_link(config, server_options) do
-    stack = PocMonday.API.Router.stack(config)
+  def start_link(_config, _server_options) do
+    # stack = CdnVerifier.Router.stack(config)
 
-    Ace.HTTP.Service.start_link(stack, server_options)
-  end
+    # Ace.HTTP.Service.start_link(stack, server_options)
 
-  # Utilities
-  def set_json_payload(response, data) do
-    response
-    |> Raxx.set_header("content-type", "application/json")
-    |> Raxx.set_body(Jason.encode!(data))
+    raxx_server = {CdnVerifier.Server, nil}
+    http_options = [port: 8080, cleartext: true]
+
+    {:ok, _pid} = Ace.HTTP.Service.start_link(raxx_server, http_options)
   end
 end

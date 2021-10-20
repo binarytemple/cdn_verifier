@@ -30,13 +30,13 @@ RUN MIX_ENV=prod mix release > /dev/null
 
 FROM alpine:3.12 AS release
 
-LABEL org.opencontainers.image.source https://github.com/bet01/beteps
+LABEL org.opencontainers.image.source https://github.com/binarytemple/cdn_verifier
 
 WORKDIR /app
 
 RUN apk upgrade && apk add --update --no-cache openssl ncurses-libs libgcc libstdc++
 
-COPY --from=base /app/_build/prod/rel/poc_monday/ .
+COPY --from=base /app/_build/prod/rel/cdn_verifier/ .
 
 RUN find /app -type f -perm +0100 -exec chmod 555 {} \;
 
@@ -44,6 +44,6 @@ ENV MONDAY_API_TOKEN ""
 ENV PORT 80
 ENV SECURE_PORT 443
 
-ENTRYPOINT ["./bin/poc_monday"]
+ENTRYPOINT ["./bin/cdn_verifier"]
 
 CMD ["start"]

@@ -1,9 +1,9 @@
-defmodule PocMonday.Mixfile do
+defmodule CdnVerifier.Mixfile do
   use Mix.Project
 
   def project do
     [
-      app: :poc_monday,
+      app: :cdn_verifier,
       version: "0.1.0",
       elixir: "~> 1.12.0",
       elixirc_paths: elixirc_paths(Mix.env()),
@@ -17,13 +17,13 @@ defmodule PocMonday.Mixfile do
 
   defp releases do
     [
-      poc_monday: [
+      cdn_verifier: [
         include_executables_for: [:unix],
         reboot_system_after_config: false,
         strip_beams: [keep: ["Docs", "Dbgi"]],
         applications: [
           runtime_tools: :permanent,
-          poc_monday: :permanent,
+          cdn_verifier: :permanent,
           ace: :permanent
         ]
       ]
@@ -31,7 +31,7 @@ defmodule PocMonday.Mixfile do
   end
 
   def application do
-    [extra_applications: [:logger], mod: {PocMonday.Application, []}]
+    [extra_applications: [:logger], mod: {CdnVerifier.Application, []}]
   end
 
   defp elixirc_paths(:test), do: ["lib", "test/support"]
